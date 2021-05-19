@@ -1,6 +1,6 @@
 {
   "name": "fospublisher-vue-text-editor",
-  "version": "0.1.18",
+  "version": "0.1.21",
   "private": false,
   "main": "./src/App.vue",
   "files": [
