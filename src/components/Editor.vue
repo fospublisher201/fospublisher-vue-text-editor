@@ -1,6 +1,6 @@
 <template>
   <body :style="styleObject.editorWidth" class="editorWidth">
-    <div class=".toolBar">
+    <div>
       <button
         :style="styleObject.toolButton"
         class="toolButton"
@@ -439,7 +439,6 @@ export default {
       isInEditMode: true,
       fontSize: ["H1", "H2", "H3", "H4", "H5", "H6"],
       fontStyle: ["돋움", "굴림", "바탕", "궁서", "맑은 고딕"],
-      // fontStyle: ['Arial', 'Comic Sans MS', 'Courier', 'Georgia', 'Tahoma', 'Times New Roman', 'Verdana'],
       imageFile: [],
       imageLink: "",
       imageNum: 0,
@@ -464,10 +463,10 @@ export default {
     // toggle image input modal
     toggleImageModal() {
       const modal = document.getElementById("imageModal");
-      if (modal.style.display == "block") {
+      if (modal.style.display === "block") {
         modal.style.display = "none";
         const imageFile = document.getElementById("ImageFile").value;
-        if (this.imageLink != "" || imageFile) {
+        if (this.imageLink !== "" || imageFile) {
           this.insertImage();
         }
       } else {
@@ -478,9 +477,9 @@ export default {
     // toggle page link modal
     toggleLinkModal() {
       const modal = document.getElementById("linkModal");
-      if (modal.style.display == "block") {
+      if (modal.style.display === "block") {
         modal.style.display = "none";
-        if (this.pageLink != "") {
+        if (this.pageLink !== "") {
           this.insertLink();
         }
       } else {
@@ -543,8 +542,7 @@ export default {
         margin: "0px auto",
       });
 
-      // 리사이즈 기능을 위한 스타일링 적용(ifram 내부 객체는 style 태그 안에서 css직접적으로 수정 불가)
-      // resiae function
+      // resize function
       iframeContents
         .find(`#${vm.imageNum}`)
         .resizable({ aspectRatio: true, minWidth: 300 });
@@ -636,7 +634,7 @@ export default {
             .find("img");
 
           imgTags.each(function(index, imgTag) {
-            if (imgTag.id == "") {
+            if (imgTag.id === "") {
               imgTag.setAttribute("id", vm.imageNum);
               imgTag.style.maxWidth = 700;
               imgTag.onload = function() {
@@ -648,7 +646,7 @@ export default {
         }, 100);
 
         // insert image with link
-      } else if (this.imageLink != "") {
+      } else if (this.imageLink !== "") {
         this.execCommandWithArg("insertImage", this.imageLink);
 
         const vm = this;
@@ -657,7 +655,7 @@ export default {
           .find("img");
 
         imgTags.each(function(index, imgTag) {
-          if (imgTag.id == "") {
+          if (imgTag.id === "") {
             imgTag.setAttribute("id", vm.imageNum);
             imgTag.style.maxWidth = 700;
             imgTag.onload = function() {
@@ -719,25 +717,25 @@ export default {
 
     // export to Word
     exportToWord() {
-      var html =
-        "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
-      var footer = "</body></html>";
-      var content =
-        html +
-        window.richTextField.document.getElementsByTagName("body")[0]
-          .innerHTML +
-        footer;
+      let html =
+          "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+      let footer = "</body></html>";
+      let content =
+          html +
+          window.richTextField.document.getElementsByTagName("body")[0]
+              .innerHTML +
+          footer;
 
       // link url
-      var url =
-        "data:application/vnd.ms-word;charset=utf-8," +
-        encodeURIComponent(content);
+      let url =
+          "data:application/vnd.ms-word;charset=utf-8," +
+          encodeURIComponent(content);
 
       // file name
-      var filename = "sample_A4" + ".doc";
+      let filename = "sample_A4" + ".doc";
 
       // Creates the  download link element dynamically
-      var downloadLink = document.createElement("a");
+      let downloadLink = document.createElement("a");
 
       document.body.appendChild(downloadLink);
 
@@ -750,7 +748,7 @@ export default {
       // triggering the function
       downloadLink.click();
 
-      // Remove the a tag after donwload starts.
+      // Remove the a tag after download starts.
       document.body.removeChild(downloadLink);
     },
   },
@@ -758,7 +756,7 @@ export default {
   mounted() {
     this.setLanguage();
     const iframe = window.richTextField.document;
-    var vm = this;
+    let vm = this;
 
     // turn on the design mode
     iframe.designMode = "On";
@@ -780,20 +778,20 @@ export default {
     // dropdown close with click event
     window.onclick = function(event) {
       if (!event.target.matches(".dropdownButton")) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        let i;
         for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
+          let openDropdown = dropdowns[i];
           if (openDropdown.classList.contains("show")) {
             openDropdown.classList.remove("show");
           }
         }
       }
-      if (event.target == document.getElementById("linkModal")) {
+      if (event.target === document.getElementById("linkModal")) {
         document.getElementById("linkModal").style.display = "none";
         vm.pageLink = "";
       }
-      if (event.target == document.getElementById("imageModal")) {
+      if (event.target === document.getElementById("imageModal")) {
         document.getElementById("imageModal").style.display = "none";
         vm.imageLink = "";
       }
@@ -801,10 +799,10 @@ export default {
 
     iframe.onclick = function(event) {
       if (!event.target.matches(".dropdownButton")) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        let i;
         for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
+          let openDropdown = dropdowns[i];
           if (openDropdown.classList.contains("show")) {
             openDropdown.classList.remove("show");
           }
@@ -832,9 +830,6 @@ export default {
 <style scoped>
 .v-text-field__details {
   display: none !important;
-}
-.toolBar {
-  display: flex;
 }
 .toolButton {
   margin-right: 2px;
@@ -941,7 +936,7 @@ export default {
   padding: 0px 5px;
   color: gray;
   -ms-user-select: none;
-  -moz-user-select: -moz-none;
+  -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -977,9 +972,6 @@ export default {
 }
 .dropdown-content :hover {
   background-color: #f1f1f1;
-}
-.show {
-  display: block;
 }
 .modal {
   display: none; /* Hidden by default */
